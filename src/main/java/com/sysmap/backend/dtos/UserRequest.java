@@ -5,11 +5,11 @@ import com.sysmap.backend.model.UserApp;
 import jakarta.validation.constraints.NotBlank;
 
 public class UserRequest {
-  @NotBlank
+  @NotBlank(message = "O nome precisa ser preenchido")
   private String nome;
-  @NotBlank
+  @NotBlank(message = "A senha precisa ser preenchida")
   private String senha;
-  @NotBlank
+  @NotBlank(message = "O email precisa ser preenchido")
   private String email;
 
   public UserRequest(@NotBlank String nome, @NotBlank String senha, @NotBlank String email) {

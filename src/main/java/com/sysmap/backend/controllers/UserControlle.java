@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sysmap.backend.dtos.UserRequest;
-import com.sysmap.backend.dtos.UserRequestPUT;
-import com.sysmap.backend.dtos.UserResponse;
-import com.sysmap.backend.services.userservice.IUserService;
+import com.sysmap.backend.dtos.user.UserRequest;
+import com.sysmap.backend.dtos.user.UserRequestPUT;
+import com.sysmap.backend.dtos.user.UserResponse;
+import com.sysmap.backend.services.user.IUserService;
 
 import jakarta.validation.Valid;
 

@@ -3,7 +3,7 @@ package com.sysmap.backend.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.sysmap.backend.dtos.UserRequest;
+import com.sysmap.backend.dtos.user.UserRequest;
 
 @Document
 public class UserApp {

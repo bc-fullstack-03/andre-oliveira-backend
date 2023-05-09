@@ -1,33 +1,27 @@
-package com.sysmap.backend.dtos;
+package com.sysmap.backend.dtos.user;
 
 import com.sysmap.backend.model.UserApp;
 
-public class UserResponse {
-  private String id;
+import jakarta.validation.constraints.NotBlank;
+
+public class UserRequest {
+  @NotBlank(message = "O nome precisa ser preenchido")
   private String nome;
+  @NotBlank(message = "A senha precisa ser preenchida")
   private String senha;
+  @NotBlank(message = "O email precisa ser preenchido")
   private String email;
 
-  public UserResponse(String id, String nome, String senha, String email) {
-    this.id = id;
+  public UserRequest(@NotBlank String nome, @NotBlank String senha, @NotBlank String email) {
     this.nome = nome;
     this.senha = senha;
     this.email = email;
   }
 
-  public UserResponse(UserApp user) {
-    this.id = user.getId();
+  public UserRequest(UserApp user) {
     this.nome = user.getNome();
     this.senha = user.getSenha();
     this.email = user.getEmail();
-  }
-
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
   }
 
   public String getNome() {

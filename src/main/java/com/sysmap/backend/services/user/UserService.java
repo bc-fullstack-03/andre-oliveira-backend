@@ -1,13 +1,13 @@
-package com.sysmap.backend.services.userservice;
+package com.sysmap.backend.services.user;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.sysmap.backend.dtos.UserRequest;
-import com.sysmap.backend.dtos.UserRequestPUT;
-import com.sysmap.backend.dtos.UserResponse;
+import com.sysmap.backend.dtos.user.UserRequest;
+import com.sysmap.backend.dtos.user.UserRequestPUT;
+import com.sysmap.backend.dtos.user.UserResponse;
 import com.sysmap.backend.exceptions.NotFoundException;
 import com.sysmap.backend.model.UserApp;
 import com.sysmap.backend.repositories.UserRepository;

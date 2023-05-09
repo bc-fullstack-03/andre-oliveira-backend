@@ -1,4 +1,4 @@
-package com.sysmap.backend.dtos;
+package com.sysmap.backend.dtos.user;
 
 public class UserRequestPUT {
   private String nome;

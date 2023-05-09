@@ -1,10 +1,10 @@
-package com.sysmap.backend.services.userservice;
+package com.sysmap.backend.services.user;
 
 import java.util.List;
 
-import com.sysmap.backend.dtos.UserRequest;
-import com.sysmap.backend.dtos.UserRequestPUT;
-import com.sysmap.backend.dtos.UserResponse;
+import com.sysmap.backend.dtos.user.UserRequest;
+import com.sysmap.backend.dtos.user.UserRequestPUT;
+import com.sysmap.backend.dtos.user.UserResponse;
 
 public interface IUserService {
   UserResponse createUser(UserRequest user);

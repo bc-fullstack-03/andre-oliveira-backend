@@ -33,4 +33,10 @@ public class ControlleAdvice {
     return new ResponseEntity<>(erro, HttpStatus.NOT_FOUND);
   }
 
+  @ExceptionHandler(AlreadyCreatedException.class)
+  public ResponseEntity<Erro> error(AlreadyCreatedException e) {
+    Erro erro = new Erro(e.getMessage(), HttpStatus.BAD_REQUEST.toString());
+    return new ResponseEntity<>(erro, HttpStatus.BAD_REQUEST);
+  }
+
 }

@@ -1,13 +1,19 @@
 package com.sysmap.backend.services.user;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.sysmap.backend.dtos.user.UserRequest;
 import com.sysmap.backend.dtos.user.UserRequestPUT;
 import com.sysmap.backend.dtos.user.UserResponse;
+import com.sysmap.backend.exceptions.AlreadyCreatedException;
 import com.sysmap.backend.exceptions.NotFoundException;
 import com.sysmap.backend.model.UserApp;
 import com.sysmap.backend.repositories.UserRepository;
@@ -16,17 +22,20 @@ import com.sysmap.backend.repositories.UserRepository;
 public class UserService implements IUserService {
 
   private UserRepository repository;
+  private PasswordEncoder encoder;
 
-  public UserService(UserRepository repository) {
+  public UserService(UserRepository repository, PasswordEncoder encoder) {
     this.repository = repository;
+    this.encoder = encoder;
   }
 
   @Override
   public UserResponse createUser(UserRequest user) {
     if (repository.findByEmail(user.getEmail()).isPresent()) {
-      throw new NotFoundException("email ja cadastrado");
+      throw new AlreadyCreatedException("email ja cadastrado");
     }
     UserApp newUser = new UserApp(user);
+    newUser.setSenha(encoder.encode(newUser.getSenha()));
     newUser = repository.save(newUser);
     return new UserResponse(newUser);
   }
@@ -58,6 +67,12 @@ public class UserService implements IUserService {
   public UserResponse getUser(String id) {
     UserApp user = repository.findById(id).orElseThrow(() -> new NotFoundException("Usuário não cadastrado"));
     return new UserResponse(user);
+  }
+
+  @Override
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    UserApp user = repository.findByEmail(username).orElseThrow(() -> new NotFoundException("Usuário não cadastrado"));
+    return new User(user.getEmail(), user.getSenha(), new ArrayList<>());
   }
 
 }

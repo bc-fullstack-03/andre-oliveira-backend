@@ -2,6 +2,7 @@ package com.sysmap.backend.dtos.user;
 
 import com.sysmap.backend.model.UserApp;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 public class UserRequest {
@@ -10,6 +11,7 @@ public class UserRequest {
   @NotBlank(message = "A senha precisa ser preenchida")
   private String senha;
   @NotBlank(message = "O email precisa ser preenchido")
+  @Email(message = "Email inválido")
   private String email;
 
   public UserRequest(@NotBlank String nome, @NotBlank String senha, @NotBlank String email) {

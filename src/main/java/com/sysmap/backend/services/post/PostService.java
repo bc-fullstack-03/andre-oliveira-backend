@@ -10,6 +10,7 @@ import com.sysmap.backend.dtos.comment.CommentRequest;
 import com.sysmap.backend.dtos.like.LikeDTO;
 import com.sysmap.backend.dtos.post.PostRequest;
 import com.sysmap.backend.dtos.post.PostResponse;
+import com.sysmap.backend.exceptions.NotFoundException;
 import com.sysmap.backend.model.Comment;
 import com.sysmap.backend.model.Like;
 import com.sysmap.backend.model.Post;
@@ -40,7 +41,7 @@ public class PostService implements IPostService {
 
   @Override
   public PostResponse createComment(String idPost, CommentRequest comment) {
-    Post post = repository.findById(idPost).get();
+    Post post = repository.findById(idPost).orElseThrow(() -> new NotFoundException("Post não encontrado"));
     Comment newComment = commentService.createComment(comment);
     post.getComments().add(newComment);
     return new PostResponse(repository.save(post));
@@ -48,7 +49,7 @@ public class PostService implements IPostService {
 
   @Override
   public List<LikeDTO> likeComment(LikeDTO like, String idComment, String idPost) {
-    Post post = repository.findById(idPost).get();
+    Post post = repository.findById(idPost).orElseThrow(() -> new NotFoundException("Post não encontrado"));
     for (Comment comment : post.getComments()) {
       if (Objects.equals(comment.getId(), idComment)) {
         comment.getLikes().add(new Like(like));
@@ -60,7 +61,7 @@ public class PostService implements IPostService {
 
   @Override
   public List<LikeDTO> likePost(LikeDTO like, String idPost) {
-    Post post = repository.findById(idPost).get();
+    Post post = repository.findById(idPost).orElseThrow(() -> new NotFoundException("Post não encontrado"));
     post.getLikes().add(new Like(like));
     post = repository.save(post);
     return post.getLikes().stream().map(LikeDTO::new).toList();

@@ -30,7 +30,7 @@ public class UserControlle {
     this.service = service;
   }
 
-  @PostMapping
+  @PostMapping("/create")
   @ResponseStatus(HttpStatus.CREATED)
   public UserResponse create(@RequestBody @Valid UserRequest user) {
     return service.createUser(user);
@@ -54,5 +54,10 @@ public class UserControlle {
   @PutMapping("/{id}")
   public UserResponse updateUser(@RequestBody UserRequestPUT user, @PathVariable String id) {
     return service.updateUser(user, id);
+  }
+
+  @PostMapping("/login")
+  public void login() {
+
   }
 }

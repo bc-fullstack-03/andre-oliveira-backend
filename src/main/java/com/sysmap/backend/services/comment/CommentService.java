@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.sysmap.backend.dtos.comment.CommentRequest;
 import com.sysmap.backend.dtos.like.LikeDTO;
+import com.sysmap.backend.exceptions.NotFoundException;
 import com.sysmap.backend.model.Comment;
 import com.sysmap.backend.model.Like;
 import com.sysmap.backend.repositories.CommentRepository;
@@ -26,7 +27,8 @@ public class CommentService implements ICommentService {
 
   @Override
   public List<LikeDTO> likeComment(LikeDTO like, String idComment) {
-    Comment comment = repository.findById(idComment).get();
+    Comment comment = repository.findById(idComment)
+        .orElseThrow(() -> new NotFoundException("Comentário não encontrado"));
     comment.getLikes().add(new Like(like));
     comment = repository.save(comment);
     return comment.getLikes().stream().map(LikeDTO::new).toList();

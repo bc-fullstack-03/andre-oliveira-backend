@@ -2,6 +2,7 @@ package com.sysmap.backend.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -10,8 +11,8 @@ import com.sysmap.backend.dtos.comment.CommentRequest;
 
 @Document
 public class Comment {
-  @Id
-  private String id;
+
+  private UUID id;
   private String userId;
   private String content;
   private List<Like> likes;
@@ -20,6 +21,7 @@ public class Comment {
   }
 
   public Comment(CommentRequest comment) {
+    this.id = UUID.randomUUID();
     this.userId = comment.getUserId();
     this.content = comment.getContent();
     this.likes = new ArrayList<>();
@@ -33,11 +35,11 @@ public class Comment {
     this.likes = likes;
   }
 
-  public String getId() {
+  public UUID getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(UUID id) {
     this.id = id;
   }
 

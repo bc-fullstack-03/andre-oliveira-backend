@@ -1,6 +1,7 @@
 package com.sysmap.backend.services.post;
 
 import java.util.List;
+import java.util.UUID;
 
 import com.sysmap.backend.dtos.comment.CommentRequest;
 import com.sysmap.backend.dtos.like.LikeDTO;
@@ -16,5 +17,5 @@ public interface IPostService {
 
   List<LikeDTO> likePost(LikeDTO like, String idPost);
 
-  List<LikeDTO> likeComment(LikeDTO like, String idComment, String idPost);
+  List<LikeDTO> likeComment(LikeDTO like, UUID idComment, String idPost);
 }

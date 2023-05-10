@@ -2,7 +2,7 @@ package com.sysmap.backend.services.post;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -15,17 +15,14 @@ import com.sysmap.backend.model.Comment;
 import com.sysmap.backend.model.Like;
 import com.sysmap.backend.model.Post;
 import com.sysmap.backend.repositories.PostRepository;
-import com.sysmap.backend.services.comment.CommentService;
 
 @Service
 public class PostService implements IPostService {
 
   private PostRepository repository;
-  private CommentService commentService;
 
-  public PostService(PostRepository repository, CommentService commentService) {
+  public PostService(PostRepository repository) {
     this.repository = repository;
-    this.commentService = commentService;
   }
 
   @Override
@@ -42,21 +39,23 @@ public class PostService implements IPostService {
   @Override
   public PostResponse createComment(String idPost, CommentRequest comment) {
     Post post = repository.findById(idPost).orElseThrow(() -> new NotFoundException("Post não encontrado"));
-    Comment newComment = commentService.createComment(comment);
+    Comment newComment = new Comment(comment);
     post.getComments().add(newComment);
     return new PostResponse(repository.save(post));
   }
 
   @Override
-  public List<LikeDTO> likeComment(LikeDTO like, String idComment, String idPost) {
+  public List<LikeDTO> likeComment(LikeDTO like, UUID idComment, String idPost) {
     Post post = repository.findById(idPost).orElseThrow(() -> new NotFoundException("Post não encontrado"));
+    Comment c = new Comment();
     for (Comment comment : post.getComments()) {
       if (Objects.equals(comment.getId(), idComment)) {
         comment.getLikes().add(new Like(like));
-        repository.save(post);
+        c = comment;
       }
     }
-    return commentService.likeComment(like, idComment);
+    repository.save(post);
+    return c.getLikes().stream().map(LikeDTO::new).toList();
   }
 
   @Override

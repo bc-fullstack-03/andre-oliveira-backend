@@ -1,6 +1,7 @@
 package com.sysmap.backend.controllers;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,7 +47,7 @@ public class PostController {
 
   @PostMapping("{idPost}/comment/{idComment}/like")
   public List<LikeDTO> likeComment(@RequestBody LikeDTO like, @PathVariable String idPost,
-      @PathVariable String idComment) {
+      @PathVariable UUID idComment) {
     return service.likeComment(like, idComment, idPost);
   }
 

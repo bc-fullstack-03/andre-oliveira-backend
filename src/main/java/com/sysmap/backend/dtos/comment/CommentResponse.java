@@ -1,12 +1,13 @@
 package com.sysmap.backend.dtos.comment;
 
 import java.util.List;
+import java.util.UUID;
 
 import com.sysmap.backend.model.Comment;
 import com.sysmap.backend.model.Like;
 
 public class CommentResponse {
-  private String id;
+  private UUID id;
   private String userId;
   private String content;
   private List<Like> likes;
@@ -18,11 +19,11 @@ public class CommentResponse {
     this.likes = comment.getLikes();
   }
 
-  public String getId() {
+  public UUID getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(UUID id) {
     this.id = id;
   }
 
